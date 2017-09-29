@@ -24,10 +24,18 @@ import err from '../src'
 .forEach(([err, Ctor, object], i) => {
 
   test(String(i), t => {
-    t.is(err instanceof Ctor, true, 'ctor')
+    try {
+      throw err
+    } catch (e) {
+      t.is(e instanceof Ctor, true, 'ctor')
 
-    Object.keys(object).forEach(key => {
-      t.is(err[key], object[key], key)
-    })
+      Object.keys(object).forEach(key => {
+        t.is(err[key], object[key], key)
+      })
+
+      return
+    }
+
+    t.fail('should fail')
   })
 })
