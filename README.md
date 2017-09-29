@@ -15,7 +15,16 @@
 
 # err-object
 
-<!-- description -->
+Custom error object.
+
+Tired writing code like this:
+
+```js
+const error = new SomeError('message')
+error.code = 'SOME_ERROR'
+```
+
+There are tremendous modules about custom errors in the NPM, but NONE of those could be usable.
 
 ## Install
 
@@ -26,7 +35,26 @@ $ npm install err-object
 ## Usage
 
 ```js
-import err_object from 'err-object'
+import err from 'err-object'
+const message = 'message'
+
+err(message)
+// Error
+// - message
+
+err({
+  message,
+  name: 'ImplementError',
+  code: 'ERR_IMPL'
+})
+// Error
+// - message
+// - name: 'ImplementError'
+// - code: 'ERR_IMPL'
+
+err(message, TypeError)
+// TypeError
+// - message
 ```
 
 ## License
