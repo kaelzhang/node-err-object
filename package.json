@@ -1,7 +1,7 @@
 {
   "name": "err-object",
-  "version": "1.0.0",
-  "description": "err-object",
+  "version": "1.0.1",
+  "description": "Custom error object.",
   "main": "lib/index.js",
   "module": "src/index.js",
   "scripts": {
@@ -20,7 +20,11 @@
     "url": "git://github.com/kaelzhang/node-err-object.git"
   },
   "keywords": [
-    "err-object"
+    "err-object",
+    "custom",
+    "errors",
+    "error code",
+    "exception"
   ],
   "engines": {
     "node": ">=4"
