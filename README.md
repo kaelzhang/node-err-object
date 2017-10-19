@@ -57,6 +57,11 @@ err(message, TypeError)
 // - message
 ```
 
+## err(thing, ctor)
+
+- **thing** `String|Object`
+- **ctor** `Class=Error`
+
 ## License
 
 MIT
