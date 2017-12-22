@@ -59,14 +59,13 @@ err(message, TypeError)
 
 ### Creates error templates to manage multiple error types
 
+We could use this to standardize the error object of your whole project.
+
 ```js
 import err, {Errors} from 'err-object'
 import util from 'util'
 
-const {
-  E,
-  error
-} = new Errors()
+const {E, error} = new Errors()
 
 // Error code, and message
 E('ERR_NO_PERMISSION', 'you do not have permission to do this')
@@ -150,6 +149,8 @@ Define an error preset.
 Returns `this`
 
 ### error.error(code, ...args)
+
+Creates a standard error object by code.
 
 - **code**
 - **args** `Array<any>` which will be passed and spreaded into `factory` after the `code` and the `preset` parameters.
