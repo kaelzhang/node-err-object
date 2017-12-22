@@ -59,7 +59,7 @@ err(message, TypeError)
 
 ### Creates error templates to manage multiple error types
 
-We could use this to standardize the error object of your whole project.
+We could use this to standardize the error objects of the whole project.
 
 ```js
 import err, {Errors} from 'err-object'
