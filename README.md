@@ -57,10 +57,104 @@ err(message, TypeError)
 // - message
 ```
 
+### Creates error templates to manage multiple error types
+
+```js
+import err, {Errors} from 'err-object'
+import util from 'util'
+
+const {
+  E,
+  error
+} = new Errors()
+
+// Error code, and message
+E('ERR_NO_PERMISSION', 'you do not have permission to do this')
+
+// Error code
+E('ERR_INVALID_TYPE', {
+  // Custom error type
+  ctor: TypeError,
+  // Message template which will be formatted by `util.format`
+  message: 'number expected but got %s'
+})
+
+const factory = (code, preset, ...args) => {
+  const {
+    ctor = Error,
+    message: messageTemplate,
+    ...others
+  } = preset
+
+  const message = util.format(messageTemplate, ...args)
+  return err({
+    ...others,
+    code,
+    message
+  }, Error)
+}
+
+E('ERR_INVALID_TYPE_2', {
+  // Custom error type
+  ctor: TypeError,
+  // Message template which will be formatted by `util.format`
+  message: 'number expected but got %s'
+
+// We can define our custom error factory,
+// and the default error factory is:
+}, factory)
+
+error('ERR_NO_PERMISSION')
+// Error
+// - code: 'ERR_NO_PERMISSION'
+// - message: 'you do not have permission to do this'
+
+error('ERR_INVALID_TYPE', 'string')
+// TypeError
+// - code: 'ERR_INVALID_TYPE'
+// - message: 'number expected but got string'
+
+error('ERR_INVALID_TYPE_2', 'string')
+// The same return value of the last statement
+
+// The constructor `Errors` accepts a `options.factory` parameter,
+// to define the default error factory.
+// And so the following statement is equivalent to `new Errors()`
+new Errors({
+  factory
+})
+```
+
 ## err(thing, ctor)
 
 - **thing** `String|Object`
 - **ctor** `Class=Error`
+
+## new Errors(options)
+
+- **options** `?Object`
+  - **factory** `?Function(code, preset, ...args)` the default error factory (the default value please see above)
+  - **notDefined** `?Function(code, ...args)` will create the error object if the given `code` is not defined.
+
+### error.E(code, preset, factory)
+
+Define an error preset.
+
+- **code** `string` define the error code
+- **preset** `?Object`
+  - **ctor** `?Error=Error` the constructor of the error
+  - **template** `?string` the message template which will be formatted by `util.format()`
+  - other property/properties that you want to add to the error object.
+- **factory** `?Function(code, preset, ...args)` the error factory
+
+Returns `this`
+
+### error.error(code, ...args)
+
+- **code**
+- **args** `Array<any>` which will be passed and spreaded into `factory` after the `code` and the `preset` parameters.
+
+Returns `Error` And if a given `code` is not defined by `error.E()`, the return value will be `notDefined(code, ...args)`
 
 ## License
 
