@@ -1,6 +1,6 @@
-import util from 'util'
+const util = require('util')
 
-const error = (thing, Ctor = Error) => {
+const error = module.exports = (thing, Ctor = Error) => {
   if (typeof thing === 'string') {
     return new Ctor(thing)
   }
@@ -15,7 +15,6 @@ const error = (thing, Ctor = Error) => {
   return error
 }
 
-
 const _factory = (code, preset, ...args) => {
   const {
     ctor = Error,
@@ -24,17 +23,23 @@ const _factory = (code, preset, ...args) => {
   } = preset
 
   const message = util.format(messageTemplate, ...args)
-  return err({
+  return error({
     ...others,
     code,
     message
-  }, Error)
+  }, ctor)
 }
 
 const _notDefined = (code, message = '') => err({
   code,
   message
 })
+
+const checkFunction = (subject, name) => {
+  if (typeof subject !== 'function') {
+    throw error(`${name} must be a function`, TypeError)
+  }
+}
 
 error.Errors = class {
   constructor ({
@@ -46,14 +51,26 @@ error.Errors = class {
     this.error = this.error.bind(this)
     this._factory = factory || _factory
     this._notDefined = notDefined || _notDefined
+
+    checkFunction(this._factory, 'factory')
+    checkFunction(this._notDefined, 'notDefined')
   }
 
-  E (code, preset, factory) {
-    this._errors[code] = [preset, factory || this._factory]
+  E (code, preset = {}, factory) {
+    factory = factory || this._factory
+
+    checkFunction(factory, 'factory')
+
+    this._errors[code] = [preset, factory]
     return this
   }
 
   error (code, ...args) {
+    if (code in this._errors) {
+      const [preset, factory] = this._errors[code]
+      return factory(code, preset, ...args)
+    }
 
+    return this._notDefined(code, ...args)
   }
 }
