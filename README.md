@@ -142,7 +142,7 @@ Define an error preset.
 - **code** `string` define the error code
 - **preset** `?Object`
   - **ctor** `?Error=Error` the constructor of the error
-  - **template** `?string` the message template which will be formatted by `util.format()`
+  - **template** `?(string | Function(...args))` the message template which will be formatted by `util.format()`
   - other property/properties that you want to add to the error object.
 - **factory** `?Function(code, preset, ...args)` the error factory
 
