@@ -55,6 +55,7 @@ const notDefinedError = 'notDefined must be a function'
     false
   ],
   ['B', {message: 'foo %s'}, ['bar'], 'foo bar'],
+  ['B', {message: a => 'foo ' + a}, ['bar'], 'foo bar'],
   ['C', {message: 'foo %s', ctor: TypeError}, ['bar'], 'foo bar'],
   ['D', {message: 'foo %s', ctor: TypeError}, ['bar'], 'foo bar',
     () => err({message: 'foo bar', code: 'D'}, TypeError)],

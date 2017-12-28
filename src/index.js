@@ -22,7 +22,10 @@ const _factory = (code, preset, ...args) => {
     ...others
   } = preset
 
-  const message = util.format(messageTemplate, ...args)
+  const message = typeof messageTemplate === 'function'
+    ? messageTemplate(...args)
+    : util.format(messageTemplate, ...args)
+
   return error({
     ...others,
     code,
