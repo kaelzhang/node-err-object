@@ -65,7 +65,7 @@ We could use this to standardize the error objects of the whole project.
 import err, {Errors} from 'err-object'
 import util from 'util'
 
-const {E, error} = new Errors()
+const {E, error, i18n} = new Errors()
 
 // Error code, and message
 E('ERR_NO_PERMISSION', 'you do not have permission to do this')
@@ -122,6 +122,15 @@ error('ERR_INVALID_TYPE_2', 'string')
 new Errors({
   factory
 })
+
+i18n({
+  'number expected but got %s': '期望 number 类型但实际为 %s'
+})
+
+error('ERR_INVALID_TYPE', 'string')
+// TypeError
+// - code: 'ERR_INVALID_TYPE'
+// - message: '期望 number 类型但实际为 string'
 ```
 
 ## err(thing, ctor)
@@ -145,6 +154,12 @@ Define an error preset.
   - **template** `?(string | Function(...args))` the message template which will be formatted by `util.format()`
   - other property/properties that you want to add to the error object.
 - **factory** `?Function(code, preset, ...args)` the error factory
+
+Returns `this`
+
+### error.i18n(language)
+
+Specify the i18n mapping.
 
 Returns `this`
 

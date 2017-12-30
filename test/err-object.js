@@ -114,3 +114,25 @@ test('constructor notDefined error', async t => {
 
   t.fail('should fail')
 })
+
+test('notDefined', async t => {
+  const {error} = new Errors()
+  const e = error('A', 'foo')
+
+  t.is(e.message, 'foo')
+  t.is(e.code, 'A')
+})
+
+test('language', t => {
+  const {E, i18n, error} = new Errors()
+  E('A', {
+    message: 'foo %s'
+  })
+
+  i18n({
+    'foo %s': 'fake foo'
+  })
+
+  const e = error('A', 'bar')
+  t.is(e.message, 'fake foo bar', 'message')
+})

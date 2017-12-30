@@ -15,7 +15,7 @@ const error = module.exports = (thing, Ctor = Error) => {
   return error
 }
 
-const _factory = (code, preset, ...args) => {
+const _factory = (e, code, preset, ...args) => {
   const {
     ctor = Error,
     message: messageTemplate,
@@ -24,7 +24,7 @@ const _factory = (code, preset, ...args) => {
 
   const message = typeof messageTemplate === 'function'
     ? messageTemplate(...args)
-    : util.format(messageTemplate, ...args)
+    : util.format(e(messageTemplate), ...args)
 
   return error({
     ...others,
@@ -33,7 +33,7 @@ const _factory = (code, preset, ...args) => {
   }, ctor)
 }
 
-const _notDefined = (code, message = '') => err({
+const _notDefined = (code, message = '') => error({
   code,
   message
 })
@@ -44,6 +44,11 @@ const checkFunction = (subject, name) => {
   }
 }
 
+const _KEY_I18N = 'err-object:i18n'
+const KEY_I18N = typeof Symbol === 'undefined'
+  ? _KEY_I18N
+  : Symbol(_KEY_I18N)
+
 error.Errors = class {
   constructor ({
     factory,
@@ -52,11 +57,23 @@ error.Errors = class {
     this._errors = Object.create(null)
     this.E = this.E.bind(this)
     this.error = this.error.bind(this)
+    this.i18n = this.i18n.bind(this)
+    this[KEY_I18N] = this[KEY_I18N].bind(this)
     this._factory = factory || _factory
     this._notDefined = notDefined || _notDefined
+    this._language = null
 
     checkFunction(this._factory, 'factory')
     checkFunction(this._notDefined, 'notDefined')
+  }
+
+  [KEY_I18N] (x) {
+    return this._language && this._language[x] || x
+  }
+
+  i18n (language) {
+    this._language = language
+    return this
   }
 
   E (code, preset = {}, factory) {
@@ -71,7 +88,7 @@ error.Errors = class {
   error (code, ...args) {
     if (code in this._errors) {
       const [preset, factory] = this._errors[code]
-      return factory(code, preset, ...args)
+      return factory(this[KEY_I18N], code, preset, ...args)
     }
 
     return this._notDefined(code, ...args)
