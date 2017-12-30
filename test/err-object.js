@@ -129,10 +129,17 @@ test('language', t => {
     message: 'foo %s'
   })
 
-  i18n({
-    'foo %s': 'fake foo'
+  E('B', {
+    message: 'foo %s2'
   })
 
-  const e = error('A', 'bar')
-  t.is(e.message, 'fake foo bar', 'message')
+  const map = {
+    'foo %s': 'fake foo'
+  }
+
+  i18n(m => map[m] || m)
+
+  t.is(error('A', 'bar').message, 'fake foo bar', 'message A')
+  t.is(error('B', 'bar').message, 'foo bar2', 'message B')
+
 })

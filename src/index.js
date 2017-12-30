@@ -58,7 +58,6 @@ error.Errors = class {
     this.E = this.E.bind(this)
     this.error = this.error.bind(this)
     this.i18n = this.i18n.bind(this)
-    this[KEY_I18N] = this[KEY_I18N].bind(this)
     this._factory = factory || _factory
     this._notDefined = notDefined || _notDefined
     this._language = null
@@ -68,11 +67,11 @@ error.Errors = class {
   }
 
   [KEY_I18N] (x) {
-    return this._language && this._language[x] || x
+    return x
   }
 
-  i18n (language) {
-    this._language = language
+  i18n (__) {
+    this[KEY_I18N] = __
     return this
   }
 

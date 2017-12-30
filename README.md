@@ -123,9 +123,11 @@ new Errors({
   factory
 })
 
-i18n({
+const ZH_CN_MAP = {
   'number expected but got %s': '期望 number 类型但实际为 %s'
-})
+}
+
+i18n(message => ZH_CN_MAP[message] || message)
 
 error('ERR_INVALID_TYPE', 'string')
 // TypeError
@@ -157,9 +159,11 @@ Define an error preset.
 
 Returns `this`
 
-### error.i18n(language)
+### error.i18n(i18nConverter)
 
-Specify the i18n mapping.
+- **i18nConverter** `Function(string): string`
+
+Specify the i18n mapping function which receives the message template and returns the converted message template.
 
 Returns `this`
 
