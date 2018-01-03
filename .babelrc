@@ -8,18 +8,8 @@
     "ava": {
       "sourceMaps": "inline",
       "plugins": [
-        "transform-es2015-modules-commonjs",
-        "transform-class-properties",
-        "transform-object-rest-spread",
-        "transform-exponentiation-operator",
-        "transform-async-to-generator",
-        "syntax-trailing-function-commas",
-        "transform-inline-environment-variables"
-      ]
-    },
-
-    "babel": {
-      "plugins": [
+        "transform-es2015-parameters",
+        "transform-es2015-spread",
         "transform-es2015-modules-commonjs",
         "transform-class-properties",
         "transform-object-rest-spread",
@@ -32,6 +22,8 @@
 
     "rollup": {
       "plugins": [
+        "transform-es2015-parameters",
+        "transform-es2015-spread",
         "transform-class-properties",
         "transform-object-rest-spread",
         "transform-exponentiation-operator",
