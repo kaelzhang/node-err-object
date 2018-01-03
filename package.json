@@ -1,6 +1,6 @@
 {
   "name": "err-object",
-  "version": "2.0.2",
+  "version": "2.0.3",
   "description": "Custom error object.",
   "main": "lib/index.js",
   "scripts": {
@@ -48,6 +48,7 @@
     "babel-plugin-syntax-trailing-function-commas": "^6.13.0",
     "babel-plugin-transform-async-to-generator": "^6.22.0",
     "babel-plugin-transform-class-properties": "^6.16.0",
+    "babel-plugin-transform-es2015-destructuring": "^6.23.0",
     "babel-plugin-transform-es2015-modules-commonjs": "^6.26.0",
     "babel-plugin-transform-es2015-parameters": "^6.24.1",
     "babel-plugin-transform-es2015-spread": "^6.22.0",
