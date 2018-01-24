@@ -7,11 +7,11 @@ const error = module.exports = (thing, Ctor = Error) => {
 
   const {
     message,
-    ...options
+    ...others
   } = thing
 
   const error = new Ctor(message)
-  Object.assign(error, options)
+  Object.assign(error, others)
   return error
 }
 
@@ -29,7 +29,8 @@ const _factory = (e, code, preset, ...args) => {
   return error({
     ...others,
     code,
-    message
+    message,
+    args
   }, ctor)
 }
 

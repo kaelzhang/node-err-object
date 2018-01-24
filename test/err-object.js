@@ -58,7 +58,7 @@ const notDefinedError = 'notDefined must be a function'
   ['B', {message: a => 'foo ' + a}, ['bar'], 'foo bar'],
   ['C', {message: 'foo %s', ctor: TypeError}, ['bar'], 'foo bar'],
   ['D', {message: 'foo %s', ctor: TypeError}, ['bar'], 'foo bar',
-    () => err({message: 'foo bar', code: 'D'}, TypeError)],
+    () => err({message: 'foo bar', code: 'D', args: ['bar']}, TypeError)],
   ['E', {}, [], '', 'not a function', factoryError]
 
 ].forEach(([code, preset, args, message, factory, EError], i) => {
@@ -82,6 +82,7 @@ const notDefinedError = 'notDefined must be a function'
     t.is(err instanceof (preset.ctor || Error), true, 'type')
     t.is(err.message, message, 'message')
     t.is(err.code, code, 'code')
+    t.deepEqual(err.args, args, 'args')
 
     Object.keys(preset).forEach(key => {
       if (key === 'ctor' || key === 'message') {

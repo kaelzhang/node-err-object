@@ -89,7 +89,8 @@ const factory = (code, preset, ...args) => {
   return err({
     ...others,
     code,
-    message
+    message,
+    args
   }, Error)
 }
 
@@ -112,6 +113,7 @@ error('ERR_INVALID_TYPE', 'string')
 // TypeError
 // - code: 'ERR_INVALID_TYPE'
 // - message: 'number expected but got string'
+// - args: ['string']
 
 error('ERR_INVALID_TYPE_2', 'string')
 // The same return value of the last statement
@@ -133,6 +135,7 @@ error('ERR_INVALID_TYPE', 'string')
 // TypeError
 // - code: 'ERR_INVALID_TYPE'
 // - message: '期望 number 类型但实际为 string'
+// - args: ['string']
 ```
 
 ## err(thing, ctor)
