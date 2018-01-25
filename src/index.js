@@ -1,6 +1,6 @@
-const util = require('util')
+import util from 'util'
 
-const error = module.exports = (thing, Ctor = Error) => {
+export const error = (thing, Ctor = Error) => {
   if (typeof thing === 'string') {
     return new Ctor(thing)
   }
@@ -50,7 +50,7 @@ const KEY_I18N = typeof Symbol === 'undefined'
   ? _KEY_I18N
   : Symbol(_KEY_I18N)
 
-error.Errors = class {
+export class Errors {
   constructor ({
     factory,
     notDefined

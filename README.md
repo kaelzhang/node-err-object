@@ -35,14 +35,14 @@ $ npm install err-object
 ## Usage
 
 ```js
-import err from 'err-object'
+import {error} from 'err-object'
 const message = 'message'
 
-err(message)
+error(message)
 // Error
 // - message
 
-err({
+error({
   message,
   name: 'ImplementError',
   code: 'ERR_IMPL'
@@ -52,7 +52,7 @@ err({
 // - name: 'ImplementError'
 // - code: 'ERR_IMPL'
 
-err(message, TypeError)
+error(message, TypeError)
 // TypeError
 // - message
 ```
@@ -62,7 +62,7 @@ err(message, TypeError)
 We could use this to standardize the error objects of the whole project.
 
 ```js
-import err, {Errors} from 'err-object'
+import {error, Errors} from 'err-object'
 import util from 'util'
 
 const {E, error, i18n} = new Errors()
@@ -86,7 +86,7 @@ const factory = (code, preset, ...args) => {
   } = preset
 
   const message = util.format(messageTemplate, ...args)
-  return err({
+  return error({
     ...others,
     code,
     message,
@@ -138,7 +138,7 @@ error('ERR_INVALID_TYPE', 'string')
 // - args: ['string']
 ```
 
-## err(thing, ctor)
+## error(thing, ctor)
 
 - **thing** `String|Object`
 - **ctor** `Class=Error`

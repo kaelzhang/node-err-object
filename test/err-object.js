@@ -1,19 +1,19 @@
 import test from 'ava'
-import err, {Errors} from '../src'
+import {error, Errors} from '../src'
 
 ;[
-  [err('foo'), Error, {
+  [error('foo'), Error, {
     message: 'foo'
   }],
-  [err({
+  [error({
     message: 'foo'
   }), Error, {
     message: 'foo'
   }],
-  [err('foo', TypeError), TypeError, {
+  [error('foo', TypeError), TypeError, {
     message: 'foo'
   }],
-  [err({
+  [error({
     message: 'foo',
     code: 'bar'
   }), Error, {
@@ -58,7 +58,7 @@ const notDefinedError = 'notDefined must be a function'
   ['B', {message: a => 'foo ' + a}, ['bar'], 'foo bar'],
   ['C', {message: 'foo %s', ctor: TypeError}, ['bar'], 'foo bar'],
   ['D', {message: 'foo %s', ctor: TypeError}, ['bar'], 'foo bar',
-    () => err({message: 'foo bar', code: 'D', args: ['bar']}, TypeError)],
+    () => error({message: 'foo bar', code: 'D', args: ['bar']}, TypeError)],
   ['E', {}, [], '', 'not a function', factoryError]
 
 ].forEach(([code, preset, args, message, factory, EError], i) => {

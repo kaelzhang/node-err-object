@@ -1,8 +1,9 @@
 {
   "name": "err-object",
-  "version": "2.1.0",
+  "version": "3.0.0",
   "description": "Custom error object.",
   "main": "lib/index.js",
+  "module": "src/index.js",
   "scripts": {
     "build": "BABEL_ENV=rollup rollup -c",
     "test": "BABEL_ENV=ava nyc ava --verbose --timeout=10s",
