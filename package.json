@@ -1,11 +1,13 @@
 {
   "name": "err-object",
-  "version": "3.0.0",
+  "version": "3.0.1",
   "description": "Custom error object.",
-  "main": "lib/index.js",
-  "module": "src/index.js",
+  "main": "dist/index.js",
+  "module": "lib/index.js",
   "scripts": {
-    "build": "BABEL_ENV=rollup rollup -c",
+    "build:es": "BABEL_ENV=es babel src --out-dir lib",
+    "build:cjs": "BABEL_ENV=cjs babel lib --out-dir dist",
+    "build": "npm run build:es && npm run build:cjs",
     "test": "BABEL_ENV=ava nyc ava --verbose --timeout=10s",
     "test-no-cov": "BABEL_ENV=ava ava --verbose --timeout=10s",
     "prepublish": "npm run build",
@@ -13,7 +15,7 @@
   },
   "files": [
     "lib/",
-    "src/"
+    "dist/"
   ],
   "repository": {
     "type": "git",
@@ -59,9 +61,6 @@
     "babel-plugin-transform-runtime": "^6.23.0",
     "babel-register": "^6.24.1",
     "codecov": "^3.0.0",
-    "nyc": "^11.1.0",
-    "rollup": "^0.53.1",
-    "rollup-plugin-babel": "^3.0.2",
-    "rollup-plugin-node-resolve": "^3.0.0"
+    "nyc": "^11.1.0"
   }
 }

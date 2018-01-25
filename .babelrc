@@ -5,13 +5,11 @@
   },
 
   "env": {
-    "ava": {
-      "sourceMaps": "inline",
+    "es": {
       "plugins": [
         "transform-es2015-destructuring",
         "transform-es2015-parameters",
         "transform-es2015-spread",
-        "transform-es2015-modules-commonjs",
         "transform-class-properties",
         "transform-object-rest-spread",
         "transform-exponentiation-operator",
@@ -20,8 +18,12 @@
         "transform-inline-environment-variables"
       ]
     },
-
-    "rollup": {
+    "cjs": {
+      "plugins": [
+        "transform-es2015-modules-commonjs"
+      ]
+    },
+    "ava": {
       "plugins": [
         "transform-es2015-destructuring",
         "transform-es2015-parameters",
@@ -31,7 +33,8 @@
         "transform-exponentiation-operator",
         "transform-async-to-generator",
         "syntax-trailing-function-commas",
-        "transform-inline-environment-variables"
+        "transform-inline-environment-variables",
+        "transform-es2015-modules-commonjs"
       ]
     }
   }
