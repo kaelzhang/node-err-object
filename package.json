@@ -1,6 +1,6 @@
 {
   "name": "err-object",
-  "version": "3.0.1",
+  "version": "3.0.2",
   "description": "Custom error object.",
   "main": "dist/index.js",
   "module": "lib/index.js",
@@ -62,5 +62,8 @@
     "babel-register": "^6.24.1",
     "codecov": "^3.0.0",
     "nyc": "^11.1.0"
+  },
+  "dependencies": {
+    "format-util": "^1.0.3"
   }
 }

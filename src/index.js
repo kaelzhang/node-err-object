@@ -1,4 +1,4 @@
-import util from 'util'
+import format from 'format-util'
 
 export const error = (thing, Ctor = Error) => {
   if (typeof thing === 'string') {
@@ -24,7 +24,7 @@ const _factory = (e, code, preset, ...args) => {
 
   const message = typeof messageTemplate === 'function'
     ? messageTemplate(...args)
-    : util.format(e(messageTemplate), ...args)
+    : format(e(messageTemplate), ...args)
 
   return error({
     ...others,
