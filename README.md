@@ -62,7 +62,7 @@ error(message, TypeError)
 We could use this to standardize the error objects of the whole project.
 
 ```js
-import {error, Errors} from 'err-object'
+import {Errors} from 'err-object'
 import util from 'util'
 
 const {E, error, i18n} = new Errors()
