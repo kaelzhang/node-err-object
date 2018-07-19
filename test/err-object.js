@@ -142,5 +142,13 @@ test('language', t => {
 
   t.is(error('A', 'bar').message, 'fake foo bar', 'message A')
   t.is(error('B', 'bar').message, 'foo bar2', 'message B')
+})
 
+test('E: only message', t => {
+  const {error, E} = new Errors
+  E('A', 'b %s')
+
+  const e = error('A', 'c')
+  t.is(e.code, 'A')
+  t.is(e.message, 'b c')
 })
