@@ -1,6 +1,6 @@
 {
   "name": "err-object",
-  "version": "4.0.0",
+  "version": "4.0.1",
   "description": "Custom error object.",
   "main": "lib/index.js",
   "module": "src/index.js",
@@ -13,7 +13,7 @@
   },
   "files": [
     "lib/",
-    "dist/"
+    "src/"
   ],
   "repository": {
     "type": "git",
