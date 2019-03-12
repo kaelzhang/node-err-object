@@ -1,6 +1,6 @@
 {
   "name": "err-object",
-  "version": "4.0.1",
+  "version": "4.0.2",
   "description": "Custom error object.",
   "main": "lib/index.js",
   "module": "src/index.js",
