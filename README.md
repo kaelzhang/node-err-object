@@ -62,7 +62,10 @@ error(message, TypeError)
 We could use this to standardize the error objects of the whole project.
 
 ```js
-import {Errors} from 'err-object'
+import {
+  Errors,
+  error as _error
+} from 'err-object'
 import util from 'util'
 
 const {E, error, i18n} = new Errors()
@@ -78,15 +81,16 @@ E('ERR_INVALID_TYPE', {
   message: 'number expected but got %s'
 })
 
-const factory = (code, preset, ...args) => {
+// The equivalent default factory
+const factory = ({code, preset, args, _}) => {
   const {
     ctor = Error,
     message: messageTemplate,
     ...others
   } = preset
 
-  const message = util.format(messageTemplate, ...args)
-  return error({
+  const message = util.format(_(messageTemplate), ...args)
+  return _error({
     ...others,
     code,
     message,
@@ -158,7 +162,8 @@ Define an error preset.
   - **ctor** `?Error=Error` the constructor of the error
   - **template** `?(string | Function(...args))` the message template which will be formatted by `util.format()`
   - other property/properties that you want to add to the error object.
-- **factory** `?Function(code, preset, ...args)` the error factory
+- **factory** `?Function({code, preset, args, _})` the error factory
+  - **_** `?Function=(x=>x)` the `i18nConverter` function which defaults to the function that just returns the argument.
 
 Returns `this`
 

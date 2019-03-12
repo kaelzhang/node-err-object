@@ -152,3 +152,24 @@ test('E: only message', t => {
   t.is(e.code, 'A')
   t.is(e.message, 'b c')
 })
+
+test('factory with i18n', t => {
+  const {error, E, i18n} = new Errors
+  i18n(m => 'b')
+
+  E('A', {
+    message: 'a'
+  }, function ({code, preset: {message}, args: [err], _}) {
+    const e = new Error()
+    e.message = _(message)
+    e.code = code
+    e.errMessage = err.message
+    return e
+  })
+
+  const err = new Error('blah')
+  const e = error('A', err)
+  t.is(e.code, 'A')
+  t.is(e.message, 'b')
+  t.is(e.errMessage, err.message)
+})
