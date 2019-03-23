@@ -76,13 +76,14 @@ export class Errors {
   }
 
   E (code, preset = {}, factory) {
-    factory = factory || this._factory
-
     if (typeof preset === 'string') {
-      preset = {
-        message: preset
-      }
+      return this.E(code, {
+        message: preset,
+        ctor: factory || Error
+      })
     }
+
+    factory = factory || this._factory
 
     checkFunction(factory, 'factory')
 

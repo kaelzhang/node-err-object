@@ -173,3 +173,12 @@ test('factory with i18n', t => {
   t.is(e.message, 'b')
   t.is(e.errMessage, err.message)
 })
+
+test('E(code, message, ctor)', async t => {
+  const {error, E} = new Errors
+  E('A', 'b', TypeError)
+
+  t.throws(() => {
+    throw error('A')
+  }, 'b', TypeError)
+})

@@ -73,6 +73,9 @@ const {E, error, i18n} = new Errors()
 // Error code, and message
 E('ERR_NO_PERMISSION', 'you do not have permission to do this')
 
+E('ERR_INVALID_TYPE', 'number expected but got %s', TypeError)
+// Which is equivalent to:
+
 // Error code
 E('ERR_INVALID_TYPE', {
   // Custom error type
@@ -154,6 +157,7 @@ error('ERR_INVALID_TYPE', 'string')
   - **notDefined** `?Function(code, ...args)` will create the error object if the given `code` is not defined.
 
 ### error.E(code, preset, factory)
+### error.E(code, template, ctor)
 
 Define an error preset.
 
