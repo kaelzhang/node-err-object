@@ -188,6 +188,26 @@ Creates a standard error object by code.
 
 Returns `Error` And if a given `code` is not defined by `error.E()`, the return value will be `notDefined(code, ...args)`
 
+## exitOnNotDefined
+
+An extremely crude function that throws an error and makes the process exit as `options.notDefined`.
+
+This function is useful for debug purpose to prevent using error codes that not defined.
+
+```js
+const {
+  Errors,
+  exitOnNotDefined
+} = require('err-object')
+
+const {error} = new Errors({
+  notDefined: exitOnNotDefined
+})
+
+error('SOME_CODE')
+// Fatal error and process exits
+```
+
 ## License
 
 MIT

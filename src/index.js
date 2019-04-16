@@ -52,6 +52,13 @@ const checkFunction = (subject, name) => {
 
 const JUST_RETURN = s => s
 
+export const exitOnNotDefined = code => {
+  /* istanbul ignore next */
+  throw error(`[err-object] code "${code}" is not defined`)
+  /* istanbul ignore next */
+  process.exit(1)
+}
+
 export class Errors {
   constructor ({
     factory,
