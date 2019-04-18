@@ -182,3 +182,22 @@ test('E(code, message, ctor)', async t => {
     throw error('A')
   }, 'b', TypeError)
 })
+
+test('prefix: [foo]', async t => {
+  const {error, E} = new Errors({
+    prefix: '[foo] '
+  })
+  E('A', 'b', TypeError)
+  E('B', {
+    message: 'c',
+    ctor: RangeError
+  })
+
+  t.throws(() => {
+    throw error('A')
+  }, '[foo] b', TypeError)
+
+  t.throws(() => {
+    throw error('B')
+  }, '[foo] c', RangeError)
+})

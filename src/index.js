@@ -63,7 +63,8 @@ export class Errors {
   constructor ({
     factory,
     notDefined,
-    i18n = JUST_RETURN
+    i18n = JUST_RETURN,
+    prefix
   } = {}) {
     this._errors = Object.create(null)
     this.E = this.E.bind(this)
@@ -72,6 +73,7 @@ export class Errors {
     this._factory = factory || _factory
     this._notDefined = notDefined || _notDefined
     this._ = i18n
+    this._prefix = prefix
 
     checkFunction(this._factory, 'factory')
     checkFunction(this._notDefined, 'notDefined')
@@ -91,6 +93,10 @@ export class Errors {
     }
 
     factory = factory || this._factory
+
+    if (this._prefix && preset.message) {
+      preset.message = `${this._prefix}${preset.message}`
+    }
 
     checkFunction(factory, 'factory')
 
