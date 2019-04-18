@@ -191,7 +191,7 @@ Returns `Error` And if a given `code` is not defined by `error.E()`, the return 
 
 ## exitOnNotDefined
 
-An extremely crude function that throws an error and makes the process exit as `options.notDefined`.
+An extremely crude function for `options.notDefined` that throws an error and makes the process exit.
 
 This function is useful for debug purpose to prevent using error codes that not defined.
 
@@ -206,7 +206,7 @@ const {error} = new Errors({
 })
 
 error('SOME_CODE')
-// Fatal error and process exits
+// Fatal error thrown and process exits
 ```
 
 ## prefix
