@@ -215,3 +215,11 @@ test('code prefix: FOO_', async t => {
   })
 })
 
+test('TE', async t => {
+  const {error, TE} = new Errors()
+  TE('A', 'b')
+
+  t.throws(() => {
+    throw error('A', null)
+  }, 'b, but got `null`', TypeError)
+})

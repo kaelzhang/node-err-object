@@ -174,6 +174,21 @@ Define an error preset.
 
 Returns `this`
 
+### error.TE(code, template)
+
+> new in `4.5.0`
+
+Define a TypeError, in favor of using `new TypeError('should be ..., but got `something`')`
+
+```js
+const {error, TE} = new Errors()
+
+TE('INVALID_OPTIONS', 'options must be an object')
+
+throw error('INVALID_OPTIONS', undefined)
+// TypeError: options must be an object, but got `undefined`
+```
+
 ### error.i18n(i18nConverter)
 
 - **i18nConverter** `Function(string): string`

@@ -59,6 +59,8 @@ export const exitOnNotDefined = code => {
   process.exit(1)
 }
 
+const BUT_GOT = ', but got `%s`'
+
 export class Errors {
   constructor ({
     factory,
@@ -69,9 +71,7 @@ export class Errors {
     messagePrefix = prefix
   } = {}) {
     this._errors = Object.create(null)
-    this.E = this.E.bind(this)
-    this.error = this.error.bind(this)
-    this.i18n = this.i18n.bind(this)
+
     this._factory = factory || _factory
     this._notDefined = notDefined || _notDefined
     this._ = i18n
@@ -80,6 +80,11 @@ export class Errors {
 
     checkFunction(this._factory, 'factory')
     checkFunction(this._notDefined, 'notDefined')
+
+    this.E = this.E.bind(this)
+    this.TE = this.TE.bind(this)
+    this.error = this.error.bind(this)
+    this.i18n = this.i18n.bind(this)
   }
 
   i18n (__) {
@@ -106,6 +111,11 @@ export class Errors {
     checkFunction(factory, 'factory')
 
     this._errors[code] = [preset, factory]
+    return this
+  }
+
+  TE (code, message) {
+    this.E(code, message + BUT_GOT, TypeError)
     return this
   }
 
