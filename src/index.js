@@ -64,7 +64,9 @@ export class Errors {
     factory,
     notDefined,
     i18n = JUST_RETURN,
-    prefix
+    prefix,
+    codePrefix,
+    messagePrefix = prefix
   } = {}) {
     this._errors = Object.create(null)
     this.E = this.E.bind(this)
@@ -73,7 +75,8 @@ export class Errors {
     this._factory = factory || _factory
     this._notDefined = notDefined || _notDefined
     this._ = i18n
-    this._prefix = prefix
+    this._messagePrefix = messagePrefix
+    this._codePrefix = codePrefix
 
     checkFunction(this._factory, 'factory')
     checkFunction(this._notDefined, 'notDefined')
@@ -94,9 +97,11 @@ export class Errors {
 
     factory = factory || this._factory
 
-    if (this._prefix && preset.message) {
-      preset.message = `${this._prefix}${preset.message}`
+    if (this._messagePrefix && preset.message) {
+      preset.message = this._messagePrefix + preset.message
     }
+
+    code = this._decorateCode(code)
 
     checkFunction(factory, 'factory')
 
@@ -104,7 +109,15 @@ export class Errors {
     return this
   }
 
+  _decorateCode (code) {
+    return this._codePrefix
+      ? this._codePrefix + code
+      : code
+  }
+
   error (code, ...args) {
+    code = this._decorateCode(code)
+
     if (code in this._errors) {
       const [preset, factory] = this._errors[code]
       const {_} = this

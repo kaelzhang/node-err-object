@@ -201,3 +201,17 @@ test('prefix: [foo]', async t => {
     throw error('B')
   }, '[foo] c', RangeError)
 })
+
+test('code prefix: FOO_', async t => {
+  const {error, E} = new Errors({
+    codePrefix: 'FOO_'
+  })
+  E('A', 'b', TypeError)
+
+  t.throws(() => {
+    throw error('A')
+  }, {
+    code: 'FOO_A'
+  })
+})
+

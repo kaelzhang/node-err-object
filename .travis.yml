@@ -4,4 +4,4 @@ node_js:
   - "6"
   - "8"
 after_success:
-  - npm run report-cov
+  - npm run report

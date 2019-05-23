@@ -155,7 +155,9 @@ error('ERR_INVALID_TYPE', 'string')
 - **options?** `Object`
   - **factory?** `Function(code, preset, ...args)` the default error factory (the default value please see above)
   - **notDefined?** `Function(code, ...args)` will create the error object if the given `code` is not defined.
-  - **prefix?** `string` the message prefix for every error message.
+  - ~~ **prefix?** `string` ~~ Deprecated in `4.4.0`
+  - **messagePrefix** `string` the message prefix for every error message. New in `4.4.0`
+  - **codePrefix** `string` the code prefix. New in `4.4.0`
 
 ### error.E(code, preset, factory)
 ### error.E(code, template, ctor)
@@ -209,11 +211,12 @@ error('SOME_CODE')
 // Fatal error thrown and process exits
 ```
 
-## prefix
+## message prefix
 
 ```js
 const {E, error} = new Errors({
-  prefix: '[err-object] '
+  messagePrefix: '[err-object] ',
+  codePrefix: 'CORE_'
 })
 
 E('FATAL_ERROR', 'this is a fatal error')
@@ -222,6 +225,7 @@ const err = error('FATAL_ERROR')
 
 console.log(err.message)
 // [err-object] this is a fatal error
+// - code: 'CORE_FATAL_ERROR'
 ```
 
 ## License

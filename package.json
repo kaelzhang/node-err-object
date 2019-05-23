@@ -1,15 +1,17 @@
 {
   "name": "err-object",
-  "version": "4.3.1",
+  "version": "4.4.0",
   "description": "Custom error object.",
   "main": "lib/index.js",
   "module": "src/index.js",
   "scripts": {
     "build": "BABEL_ENV=es5 babel src --out-dir lib",
     "test": "BABEL_ENV=node nyc ava --verbose --timeout=10s",
-    "test-no-cov": "BABEL_ENV=node ava --verbose --timeout=10s",
+    "test:dev": "npm run test && npm run report:dev",
     "prepublishOnly": "npm run build",
-    "report-cov": "nyc report --reporter=text-lcov > coverage.lcov && codecov"
+    "report": "nyc report --reporter=text-lcov > coverage.lcov && codecov",
+    "report:dev": "nyc report --reporter=html && npm run report:open",
+    "report:open": "open coverage/index.html"
   },
   "files": [
     "lib/",
