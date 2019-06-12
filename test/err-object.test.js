@@ -1,8 +1,10 @@
 const path = require('path')
+const log = require('util').debuglog('err-object')
 const {fork} = require('child_process')
 const test = require('ava')
 
 const {error, Errors} = require('..')
+const cleanedError = require('./cleaned-error')
 
 ;[
   [error('foo'), Error, {
@@ -225,4 +227,12 @@ test('TE', async t => {
   t.throws(() => {
     throw error('A', null)
   }, 'b, but got `null`', TypeError)
+})
+
+test('cleaned stack sources', async t => {
+  const {stack} = cleanedError('A')
+  log('cleanedError stack: %s', stack)
+  const source = path.join(__dirname, 'cleaned-error.js')
+
+  t.false(stack.includes(source))
 })

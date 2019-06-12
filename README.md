@@ -17,6 +17,9 @@
 
 Custom error object.
 
+- supports to define error codes and messages in advance before use.
+- provides cleaned error stack and we can manage the stack sanitizer by using [`error-stack`](https://github.com/kaelzhang/error-stack) (since 5.1.0)
+
 Tired writing code like this:
 
 ```js
@@ -24,7 +27,7 @@ const error = new SomeError('message')
 error.code = 'SOME_ERROR'
 ```
 
-There are tremendous modules about custom errors in the NPM, but NONE of those could be usable.
+There are tremendous modules about custom errors in the NPM, but NONE of those is usable.
 
 ## Install
 
@@ -156,8 +159,9 @@ error('ERR_INVALID_TYPE', 'string')
   - **factory?** `Function(code, preset, ...args)` the default error factory (the default value please see above)
   - **notDefined?** `Function(code, ...args)=exitOnNotDefined` will create the error object if the given `code` is not defined by `error.E`. Since `5.0.0`, if the given error code is not defined by `error.E`, it will throw an error and exit the current process.
   - ~~ **prefix?** `string` ~~ Deprecated in `4.4.0`
-  - **messagePrefix** `string` the message prefix for every error message. New in `4.4.0`
-  - **codePrefix** `string` the code prefix. New in `4.4.0`
+  - **messagePrefix?** `string` the message prefix for every error message. New in `4.4.0`
+  - **codePrefix?** `string` the code prefix. New in `4.4.0`
+  - **filterStackSources?** `Array<path>=[]` defines source paths to be filtered out from error stacks. New in `5.1.0`
 
 ### error.E(code, preset, factory)
 ### error.E(code, template, ctor)

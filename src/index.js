@@ -1,6 +1,18 @@
 const util = require('util')
+const parse = require('error-stack')
 
-const error = (thing, Ctor = Error) => {
+const cleanStack = (err, pathsToFilter = []) => {
+  pathsToFilter = pathsToFilter.concat(__filename)
+
+  const {stack} = err
+  const parsed = parse(stack)
+  .filter(({source}) => !pathsToFilter.includes(source))
+
+  err.stack = parsed.format()
+  return err
+}
+
+const createError = (thing, Ctor = Error) => {
   if (typeof thing === 'string') {
     return new Ctor(thing)
   }
@@ -10,9 +22,14 @@ const error = (thing, Ctor = Error) => {
     ...others
   } = thing
 
-  const error = new Ctor(message)
-  Object.assign(error, others)
-  return error
+  const err = new Ctor(message)
+  Object.assign(err, others)
+  return err
+}
+
+const error = (...args) => {
+  const err = createError(...args)
+  return cleanStack(err)
 }
 
 function _factory ({
@@ -66,7 +83,8 @@ class Errors {
     i18n = JUST_RETURN,
     prefix,
     codePrefix,
-    messagePrefix = prefix
+    messagePrefix = prefix,
+    filterStackSources = []
   } = {}) {
     this._errors = Object.create(null)
 
@@ -75,6 +93,7 @@ class Errors {
     this._ = i18n
     this._messagePrefix = messagePrefix
     this._codePrefix = codePrefix
+    this._filterStackSources = filterStackSources
 
     checkFunction(this._factory, 'factory')
     checkFunction(this._notDefined, 'notDefined')
@@ -123,7 +142,7 @@ class Errors {
       : code
   }
 
-  error (code, ...args) {
+  _create (code, ...args) {
     code = this._decorateCode(code)
 
     if (code in this._errors) {
@@ -139,6 +158,11 @@ class Errors {
     }
 
     return this._notDefined(code, ...args)
+  }
+
+  error (...args) {
+    const err = this._create(...args)
+    return cleanStack(err, this._filterStackSources)
   }
 }
 
