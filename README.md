@@ -158,7 +158,7 @@ error('ERR_INVALID_TYPE', 'string')
 - **options?** `Object`
   - **factory?** `Function(code, preset, ...args)` the default error factory (the default value please see above)
   - **notDefined?** `Function(code, ...args)=exitOnNotDefined` will create the error object if the given `code` is not defined by `error.E`. Since `5.0.0`, if the given error code is not defined by `error.E`, it will throw an error and exit the current process.
-  - ~~ **prefix?** `string` ~~ Deprecated in `4.4.0`
+  - ~~**prefix?** `string`~~ Deprecated in `4.4.0`
   - **messagePrefix?** `string` the message prefix for every error message. New in `4.4.0`
   - **codePrefix?** `string` the code prefix. New in `4.4.0`
   - **filterStackSources?** `Array<path>=[]` defines source paths to be filtered out from error stacks. New in `5.1.0`
