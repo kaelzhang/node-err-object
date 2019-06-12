@@ -20,6 +20,8 @@ Custom error object.
 - supports to define error codes and messages in advance before use.
 - provides cleaned error stack and we can manage the stack sanitizer by using [`error-stack`](https://github.com/kaelzhang/error-stack) (since 5.1.0)
 
+## Why
+
 Tired writing code like this:
 
 ```js
@@ -225,6 +227,54 @@ const err = error('FATAL_ERROR')
 console.log(err.message)
 // [err-object] this is a fatal error
 // - code: 'CORE_FATAL_ERROR'
+```
+
+### options.filterStackSources
+
+/path/to/a.js (before):
+
+```js
+const {error, E} = new Error()
+E('FOO', 'bar')
+module.exports = code => error(code)
+```
+
+/path/to/b.js
+```js
+const error = require('./a')
+const err = error('FOO')
+
+console.log(err.stack)
+// Error: bar
+//     at Object.<anonymous> (/path/to/a.js:3:1)
+//     at error (/path/to/b.js:2:13)
+//     ...
+```
+
+Let's take a look at the error stack above, the `/path/to/a.js` line is actually useless.
+
+Then how to get rid of the first stack trace line? We can use `options.filterStackSources`
+
+/path/to/a.js (after):
+
+```js
+const {error, E} = new Error({
+  filterStackSources: [
+    // Filter out the current source file
+    __filename
+  ]
+})
+E('FOO', 'bar')
+module.exports = code => error(code)
+```
+
+Then,
+
+```js
+console.log(err.stack)
+// Error: bar
+//     at error (/path/to/b.js:2:13)
+//     ...
 ```
 
 ## License
