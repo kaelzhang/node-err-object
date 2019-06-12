@@ -1,9 +1,8 @@
 {
   "name": "err-object",
-  "version": "4.5.0",
+  "version": "5.0.0",
   "description": "Custom error object.",
-  "main": "lib/index.js",
-  "module": "src/index.js",
+  "main": "src/index.js",
   "scripts": {
     "build": "BABEL_ENV=es5 babel src --out-dir lib",
     "test": "BABEL_ENV=node nyc ava --verbose --timeout=10s",
@@ -14,7 +13,6 @@
     "report:open": "open coverage/index.html"
   },
   "files": [
-    "lib/",
     "src/"
   ],
   "repository": {
@@ -37,8 +35,9 @@
     "url": "https://github.com/kaelzhang/node-err-object/issues"
   },
   "ava": {
-    "require": [
-      "@babel/register"
+    "babel": false,
+    "files": [
+      "test/*.test.js"
     ]
   },
   "devDependencies": {

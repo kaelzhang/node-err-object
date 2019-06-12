@@ -1,6 +1,6 @@
-import util from 'util'
+const util = require('util')
 
-export const error = (thing, Ctor = Error) => {
+const error = (thing, Ctor = Error) => {
   if (typeof thing === 'string') {
     return new Ctor(thing)
   }
@@ -39,29 +39,27 @@ function _factory ({
   }, ctor)
 }
 
-const _notDefined = (code, message = '') => error({
-  code,
-  message
-})
-
 const checkFunction = (subject, name) => {
   if (typeof subject !== 'function') {
-    throw error(`${name} must be a function`, TypeError)
+    throw error(`[err-object] ${name} must be a function`, TypeError)
   }
 }
 
 const JUST_RETURN = s => s
 
-export const exitOnNotDefined = code => {
+const exitOnNotDefined = code => {
+  const err = error(`[err-object] code "${code}" is not defined`)
+  err.code = 'ERROR_CODE_NOT_DEFINED'
+
   /* istanbul ignore next */
-  throw error(`[err-object] code "${code}" is not defined`)
+  throw err
   /* istanbul ignore next */
   process.exit(1)
 }
 
 const BUT_GOT = ', but got `%s`'
 
-export class Errors {
+class Errors {
   constructor ({
     factory,
     notDefined,
@@ -73,7 +71,7 @@ export class Errors {
     this._errors = Object.create(null)
 
     this._factory = factory || _factory
-    this._notDefined = notDefined || _notDefined
+    this._notDefined = notDefined || exitOnNotDefined
     this._ = i18n
     this._messagePrefix = messagePrefix
     this._codePrefix = codePrefix
@@ -142,4 +140,9 @@ export class Errors {
 
     return this._notDefined(code, ...args)
   }
+}
+
+module.exports = {
+  Errors,
+  error
 }

@@ -1,5 +1,8 @@
-import test from 'ava'
-import {error, Errors} from '../src'
+const path = require('path')
+const {fork} = require('child_process')
+const test = require('ava')
+
+const {error, Errors} = require('..')
 
 ;[
   [error('foo'), Error, {
@@ -39,8 +42,8 @@ import {error, Errors} from '../src'
   })
 })
 
-const factoryError = 'factory must be a function'
-const notDefinedError = 'notDefined must be a function'
+const factoryError = '[err-object] factory must be a function'
+const notDefinedError = '[err-object] notDefined must be a function'
 
 ;[
   [
@@ -116,12 +119,12 @@ test('constructor notDefined error', async t => {
   t.fail('should fail')
 })
 
-test('notDefined', async t => {
-  const {error} = new Errors()
-  const e = error('A', 'foo')
-
-  t.is(e.message, 'foo')
-  t.is(e.code, 'A')
+test.cb('notDefined', t => {
+  const filepath = path.join(__dirname, 'exit.js')
+  fork(filepath).on('exit', code => {
+    t.is(code, 1)
+    t.end()
+  })
 })
 
 test('language', t => {

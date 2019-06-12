@@ -29,7 +29,7 @@ There are tremendous modules about custom errors in the NPM, but NONE of those c
 ## Install
 
 ```sh
-$ npm install err-object
+$ npm i err-object
 ```
 
 ## Usage
@@ -154,7 +154,7 @@ error('ERR_INVALID_TYPE', 'string')
 
 - **options?** `Object`
   - **factory?** `Function(code, preset, ...args)` the default error factory (the default value please see above)
-  - **notDefined?** `Function(code, ...args)` will create the error object if the given `code` is not defined.
+  - **notDefined?** `Function(code, ...args)=exitOnNotDefined` will create the error object if the given `code` is not defined by `error.E`. Since `5.0.0`, if the given error code is not defined by `error.E`, it will throw an error and exit the current process.
   - ~~ **prefix?** `string` ~~ Deprecated in `4.4.0`
   - **messagePrefix** `string` the message prefix for every error message. New in `4.4.0`
   - **codePrefix** `string` the code prefix. New in `4.4.0`
@@ -205,26 +205,6 @@ Creates a standard error object by code.
 - **args** `Array<any>` which will be passed and spreaded into `factory` after the `code` and the `preset` parameters.
 
 Returns `Error` And if a given `code` is not defined by `error.E()`, the return value will be `notDefined(code, ...args)`
-
-## exitOnNotDefined
-
-An extremely crude function for `options.notDefined` that throws an error and makes the process exit.
-
-This function is useful for debug purpose to prevent using error codes that not defined.
-
-```js
-const {
-  Errors,
-  exitOnNotDefined
-} = require('err-object')
-
-const {error} = new Errors({
-  notDefined: exitOnNotDefined
-})
-
-error('SOME_CODE')
-// Fatal error thrown and process exits
-```
 
 ## message prefix
 
