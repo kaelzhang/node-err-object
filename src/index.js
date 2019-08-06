@@ -74,7 +74,7 @@ const exitOnNotDefined = code => {
   process.exit(1)
 }
 
-const BUT_GOT = ', but got `%s`'
+const BUT_GOT = ', but got `%j`'
 
 class Errors {
   constructor ({
