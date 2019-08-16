@@ -185,7 +185,7 @@ test('E(code, message, ctor)', async t => {
 
   t.throws(() => {
     throw error('A')
-  }, 'b', TypeError)
+  }, 'b')
 })
 
 test('prefix: [foo]', async t => {
@@ -200,11 +200,11 @@ test('prefix: [foo]', async t => {
 
   t.throws(() => {
     throw error('A')
-  }, '[foo] b', TypeError)
+  }, '[foo] b')
 
   t.throws(() => {
     throw error('B')
-  }, '[foo] c', RangeError)
+  }, '[foo] c')
 })
 
 test('code prefix: FOO_', async t => {
@@ -226,7 +226,7 @@ test('TE', async t => {
 
   t.throws(() => {
     throw error('A', null)
-  }, 'b, but got `null`', TypeError)
+  }, 'b, but got `null`')
 })
 
 test('cleaned stack sources', async t => {
